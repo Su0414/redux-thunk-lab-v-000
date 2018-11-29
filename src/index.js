@@ -2,8 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 import App from './App'
 
+import {Provider} from 'react-redux'
+import {createStore, applyMiddleware, compose } from 'redux'
 
-ReactDOM.render(
-    <App />,
-    document.getElementById('root')
+import thunk from 'redux-thunk'
+import rootReducer from './reducers'
+import { WrapperApp } from './App'
+
+const store = createStore(
+    rootReducer, 
+    compose(
+        applyMiddleware(thunk),
+        window.devToolsExtension
+    )
 );
+
+   ReactDOM.render(
+         
+    <Provider store={store}>
+      <WrapperApp />
+    </Provider>,
+
+    document.getElementById('root')
+  );
